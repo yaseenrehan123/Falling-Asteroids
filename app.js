@@ -2,7 +2,11 @@
 let isTabActive = true;
 const maxSpawnRate = 4;
 let spawnRate = 1;
-
+let isPaused = true;
+const gameScore = {
+    currentScore: 0,
+    highestScore:0,
+};
 //Set isTabActive
 window.addEventListener('focus',function(){
     isTabActive = true;
@@ -10,13 +14,77 @@ window.addEventListener('focus',function(){
 window.addEventListener('blur',function(){
     isTabActive = false;
 });
+//UI
+const settingsBtn = document.querySelector('.settings-btn');
+const restartBtn = document.getElementById('restart-btn');
+const mainMenuBtn = document.getElementById('go-to-main-menu-btn');
+const unpauseBtn = document.querySelector('.unpause-btn');
+const resetScoreBtn = document.getElementById('reset-score-btn');
+const startBtn = document.getElementById('start-btn');
+const quitBtn = document.getElementById('quit-btn');
+const pauseWindow = document.querySelector('.pause-window');
+const scoreText = document.querySelector('.current-score h1');
+const highestScoreText = document.querySelector('.highest-score h1');
+const mainMenu = document.querySelector('main-menu');
+
+settingsBtn.onclick = function(){ //settings btn
+    // enable settings
+        isPaused = true;
+        pauseWindow.style.display = 'inline-block';
+        settingsBtn.style.display = 'none'
+}
+restartBtn.onclick = function(){ //restart level btn
+    // reset things
+    if(settingsBtn.style.display === 'none'){
+        settingsBtn.style.display = 'inline-block';
+    }
+    resetGame();
+}
+mainMenuBtn.onclick = function(){ //go to main-menu btn
+    location.reload();
+}
+unpauseBtn.onclick = function(){ // unpause btn
+    isPaused = false;
+    pauseWindow.style.display = 'none';
+    settingsBtn.style.display = 'inline-block'
+}
+resetScoreBtn.onclick = function(){ //reset score and level btn
+    if(settingsBtn.style.display === 'none'){
+        settingsBtn.style.display = 'inline-block';
+    }
+    resetGame();
+    localStorage.removeItem('score');
+}
+startBtn.onclick = function(){ // start/play btn
+    isPaused = false;
+    settingsBtn.style.display = 'inline-block';
+   const menuBtns = document.querySelectorAll('.menu-btn');
+   menuBtns.forEach(function(btn){
+    btn.style.display = 'none';
+   });
+}
+// set score at beginning
+scoreText.textContent = `Score: 0`;
+highestScoreText.textContent = `Highest Score: ${JSON.parse(localStorage.getItem('score')) || 0}`;
+
+function resetGame(){// used to reset game but not go back to mainmenu
+    boxContainer.innerHTML = '';
+    gameScore.currentScore = 0;
+    spawnRate = 1;
+    scoreText.textContent = `Score: 0`;
+    highestScoreText.textContent = `Highest Score: ${JSON.parse(localStorage.getItem('score')) || 0}`;
+    if(isPaused){
+        isPaused = false;
+        pauseWindow.style.display = 'none';
+    }
+}
 //boxes
 const boxes = [];
 const boxContainer = document.querySelector('.box-container');
 setInterval(spawnBox, 3000);
 
 function spawnBox(){
-    if(!isTabActive){
+    if(!isTabActive || isPaused){// if paused than return, if tab not active return.
         return;
     }
     for(i = 0; i < spawnRate; i++){
@@ -29,14 +97,26 @@ function spawnBox(){
     
         box.style.left = posX + 'px';
         box.onclick = (e) =>{
-            x = e.pageX;
-            y = e.pageY;
-            createParticles(x,y,'pink');
-            deleteBox(box);
+            if(!isPaused){
+                x = e.pageX;
+                y = e.pageY;
+                createParticles(x,y,'pink');
+                deleteBox(box);
+                gameScore.currentScore++;
+                // display score
+                scoreText.textContent = `Score: ${gameScore.currentScore}`;
+                let highestScore = localStorage.getItem('score') || 0;
+                if(gameScore.currentScore > highestScore){
+                    gameScore.highestScore = gameScore.currentScore;
+                    highestScoreText.textContent = `Highest Score: ${gameScore.highestScore}`;
+                    localStorage.setItem('score',JSON.stringify(gameScore.highestScore));
+                }
+            }
+           
         }
         boxes.push(box);
         boxContainer.appendChild(box);
-    
+        
         moveBox(box,0);
     }
    
@@ -50,7 +130,7 @@ function deleteBox(box){
 }
 function moveBox(box,posY){
     function animate() {
-        if (!isTabActive) {
+        if (!isTabActive || isPaused) { // if paused than return, if tab not active return.
             requestAnimationFrame(animate); // Keep retrying when tab is inactive
             return;
         }
@@ -103,6 +183,9 @@ function createParticles(x,y,color){
 }
 //Increase spawnRate
 function increaseSpawnRate(){
+    if(!isTabActive || isPaused){// if paused than return, if tab not active return.
+        return;
+    }
     if(spawnRate < maxSpawnRate){
         spawnRate ++;
     }
@@ -112,3 +195,4 @@ setInterval(increaseSpawnRate,10000);
 window.addEventListener('resize',function(){
     boxContainer.innerHTML = '';
 });
+

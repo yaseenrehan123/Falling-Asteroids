@@ -8,11 +8,73 @@
     <link rel="stylesheet" href="style.css">
     <!--Javascript-->
     <script src="app.js" defer></script>
+    <!--Boxicons-->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 </head>
 <body>
     <div class="box-container">
         
     </div>
+    
+    <div class="ui-container">
+
+        <button class="settings-btn">Settings</button>
+
+        <div class="pause-window">
+            <div class="wrapper">
+
+                <div class="heading">
+                    <h1>Paused!</h1>
+                </div>
+
+                <button class="pause-screen-btn" id="go-to-main-menu-btn">
+                    Main Menu
+                </button>
+
+                <button class="pause-screen-btn" id="restart-btn">
+                    Restart
+                </button>
+
+                <button class="pause-screen-btn" id="reset-score-btn">
+                    Reset Score
+                </button>
+                
+                <div class="display-score-section">
+
+                    <div class="current-score">
+                        <h1>Score:</h1>
+                    </div>
+
+                    <div class="highest-score">
+                        <h1>Highest Score:</h1>
+                    </div>
+
+                </div>
+
+                <div class="unpause-btn">
+                    <i class='bx bx-x'></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-menu hide-main-menu">
+            
+            <button class="menu-btn" id="start-btn">
+                Start
+            </button>
+            <a href="">
+                <button class="menu-btn">
+                    Website/Credits
+                </button>
+            </a>
+            
+            <button class="menu-btn" id="quit-btn">
+                Quit
+            </button>
+
+        </div>
+    </div>
+    
 </body>
 </html>
