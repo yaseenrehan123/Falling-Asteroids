@@ -5,9 +5,8 @@
 }
 body,html{
     overflow: hidden;
-    background-color: #1b252c;
+    background-color: #1a2b37;
     position: relative;
-    border: green solid 1px;
     width: 100%;
     height: 100%;
     --text-theme-color:white;
@@ -19,12 +18,15 @@ body,html{
 .box{
     width: 100px;
     height: 100px;
-    background-color: pink;
     animation: block-spin-animation 8s linear infinite;
     position: absolute;
 }
 .box:hover{
     cursor: pointer;
+}
+.box-img{
+    width: 100%;
+    height: 100%;
 }
 .particle-span{
     position: absolute;
@@ -166,6 +168,19 @@ body,html{
 .unpause-btn:active{
     color: rgb(192, 7, 7);
     transform: scale(0.96);
+}
+.hp-container{
+    position: fixed;
+    width: 75px;
+    height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+.hp-container img{
+    width: 100%;
+    height: 100%;
 }
 @media(max-width:500px){
     .unpause-btn{
