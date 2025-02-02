@@ -9,7 +9,7 @@ const minSpawnDelay = 3000; // Ensures consistent spawn rate
 let lastBoxPosX = null; // Track last box position
 const minGap = 100; // Minimum gap between spawns
 const maxHp = 10;
-let hp;
+let hp = maxHp;
 const gameScore = {
     currentScore: 0,
     highestScore:0,
@@ -74,8 +74,6 @@ startBtn.onclick = function(){ // start/play btn
 // set score at beginning
 scoreText.textContent = `Score: 0`;
 highestScoreText.textContent = `Highest Score: ${JSON.parse(localStorage.getItem('score')) || 0}`;
-// set hp at beginning
-hp = maxHp;
 function resetGame(){// used to reset game but not go back to mainmenu
     boxContainer.innerHTML = '';
     gameScore.currentScore = 0;
@@ -111,14 +109,8 @@ function spawnBox(){
             box.appendChild(boxImg);
             const containerRect = boxContainer.getBoundingClientRect();
             const containerWidth = containerRect.width;
-            let posX = containerRect.left + Math.floor(Math.random() * containerWidth);
-            if(lastBoxPosX === null){
-                lastBoxPosX = posX;
-            }
-            else if((posX - lastBoxPosX) > minGap){
-                posX += minGap;
-                lastBoxPosX = posX;
-            }
+            let posX =  Math.floor(Math.random() * containerWidth);
+            
             box.style.left = posX + 'px';
             box.style.top = 0;
             box.onclick = (e) => {
