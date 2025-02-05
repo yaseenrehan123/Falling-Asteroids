@@ -66,8 +66,8 @@ body,html{
 }
 .pause-window{
     max-width: 500px;
-    min-width: 250px;
-    min-height: 300px;
+    min-width: 200px;
+    min-height: 250px;
     width: 100%;
     height: auto;
     border: none;
@@ -76,6 +76,7 @@ body,html{
     left: 50%;
     transform: translate(-50%,-50%);
     display: none;
+    flex: 1 1 0;
 }
 .pause-window .wrapper{
     display: flex;
@@ -104,11 +105,11 @@ body,html{
     text-align: center;
 }
 .pause-screen-btn:hover{
-    transform: scale(0.99);
+    transform: scale(0.97);
     cursor: pointer;
 }
 .pause-screen-btn:active{
-    transform: scale(0.96);
+    transform: scale(0.95);
 }
 .display-score-section{
     display: flex;
@@ -187,4 +188,29 @@ body,html{
         top: -20px;
         right: -20px;
     }
+}
+.game-over-menu{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    max-width: 500px;
+    min-width: 200px;
+    min-height: 300px;
+    background-color: rgb(17, 53, 92);
+    width: 100%;
+    display: none;
+}
+.game-over-menu .wrapper{
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+}
+.game-over-menu .wrapper .heading{
+    color: var(--text-theme-color);
+    font-size: clamp(1.3rem,6vw,1.6rem);
 }
