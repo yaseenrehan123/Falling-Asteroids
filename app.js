@@ -105,9 +105,9 @@ function startBtnClicked(){
     isPaused = false;
     enableObjectInlineBlock(settingsBtn);
     enableObjectFlex(hpBar);
-   const menuBtns = document.querySelectorAll('.menu-btn');
-   menuBtns.forEach(function(btn){
-    disableObject(btn);
+   const hideOnPlayElements = document.querySelectorAll('.hide-on-play');
+   hideOnPlayElements.forEach(function(e){
+    disableObject(e);
    });
 }
 function quitBtnClicked(){
