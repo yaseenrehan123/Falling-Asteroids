@@ -11,20 +11,20 @@ body,html{
     height: 100%;
     --text-theme-color:white;
 }
-.box-container {
+.container {
     width: calc(100% - 200px); /* Adjust width to account for removed padding */
     position: relative;
 }
-.box{
+.element{
     width: 100px;
     height: 100px;
     animation: block-spin-animation 8s linear infinite;
     position: absolute;
 }
-.box:hover{
+.element:hover{
     cursor: pointer;
 }
-.box-img{
+.element-img{
     width: 100%;
     height: 100%;
 }
