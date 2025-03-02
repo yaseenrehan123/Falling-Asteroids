@@ -1,20 +1,30 @@
+import * as asteroidScript from './asteroid.js';
 //#region general variables
 let isTabActive = true;
 
-let isPaused = true; // make true at start so game is paused! 
+export let isPaused = true; // make true at start so game is paused! 
 
 
 
 //#region score
-const gameScore = {
+export const gameScore = {
     currentScore: 0,
     highestScore:0,
 };
 //#endregion
+window.addEventListener('focus',function(){
+    isTabActive = true;
+});
+window.addEventListener('blur',function(){
+    isTabActive = false;
+});
+window.addEventListener('resize',function(){
+    asteroidScript.ClearContainer();
+});
 
-function gameOver(){
-    clearSpawnTimeouts();
-    ClearContainer();
+export function gameOver(){
+    asteroidScript.clearSpawnTimeouts();
+    asteroidScript.ClearContainer();
    const heading = document.querySelector('.pause-window .wrapper .heading h1');
    heading.textContent = 'Game Over!'
    isPaused = true;
@@ -26,23 +36,33 @@ function gameOver(){
 
 //#region general reusability functions 
 
-function enableObjectInlineBlock(object){
+export function enableObjectInlineBlock(object){
     object.style.display = 'inline-block';
 }
-function enableObjectFlex(object){
+export function enableObjectFlex(object){
     object.style.display = 'flex';
 }
-function disableObject(object){
+export function disableObject(object){
     console.log("Disabling object:", object);
     console.log("Current display:", object.style.display);
-
     object.style.display = 'none';
 }
-
-
-
+export function isWindowActive(){
+    if(!isTabActive || isPaused){
+        return false;
+    }
+    else{
+        return true
+    }
+}
+export function pause(){
+    isPaused = true;
+}
+export function unPause(){
+    isPaused = false;
+}
 //#region random genrator 
-function returnRandomNum(min,max){
+export function returnRandomNum(min,max){
     return Math.floor(Math.random() * (max - min)) + min;
 }
 //#endregion

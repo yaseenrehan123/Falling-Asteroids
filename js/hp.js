@@ -1,9 +1,11 @@
+import * as appScript from './app.js';
+import * as uiScript from './ui.js';
 const maxHp = 10;
 let hp = maxHp;
 
 const hpImg = document.querySelector('.hp-container img');
 
-function subtractHp(){
+export function subtractHp(){
     if(hp > 0){
         hp--;
     }
@@ -11,14 +13,14 @@ function subtractHp(){
     handleHp();
     
 }
-function increaseHp(){
+export function increaseHp(){
     if(hp < maxHp){
         hp++;
     }
     
     handleHp()
 }
-function handleHp(){
+ export function handleHp(){
     let hpImgNum = ''
     switch(hp){
         case 10:
@@ -52,8 +54,8 @@ function handleHp(){
             hpImgNum = 9;
             break;
         case 0:
-            disableObject(hpBar);
-            gameOver();
+            appScript.disableObject(uiScript.hpBar);
+            appScript.gameOver();
             //alert('Game Ended, You lost');
             return;               
         default:
@@ -61,4 +63,8 @@ function handleHp(){
             return;
     }
     hpImg.src = `images/hearts/Heart${hpImgNum}.gif`;
+}
+export function resetHp(){
+    hp = maxHp;
+    handleHp();
 }

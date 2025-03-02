@@ -1,13 +1,16 @@
-function spawnElement({ className, images, onClick, onDestroy, spawnRate = 1,arrayRef = null }) {
-    randomSpawnDelay = returnRandomNum(minSpawnDelay, maxSpawnDelay);
+import * as appScript from '../js/app.js';
+import * as asteroidScript from '../js/asteroid.js';
+let spawnTimeouts = []; // Store timeouts
+export function spawnElement({ className, images, onClick, onDestroy, spawnRate = 1,arrayRef = null }) {
+    
 
-    if (!isTabActive || isPaused) {
+    if(!appScript.isWindowActive()){
         return;
     }
 
     for (let i = 0; i < spawnRate; i++) {
         const timeoutID = setTimeout(() => {
-            if (isPaused) return;
+            if (!appScript.isWindowActive()) return;
 
             const element = document.createElement("div");
             element.className = className;
@@ -24,7 +27,7 @@ function spawnElement({ className, images, onClick, onDestroy, spawnRate = 1,arr
             elementImg.className = "element-img";
             element.appendChild(elementImg);
 
-            const containerRect = container.getBoundingClientRect();
+            const containerRect = asteroidScript.container.getBoundingClientRect();
             const containerWidth = containerRect.width;
             let posX = Math.floor(Math.random() * containerWidth);
 
@@ -32,7 +35,7 @@ function spawnElement({ className, images, onClick, onDestroy, spawnRate = 1,arr
             element.style.top = "0px";
 
             element.onclick = () => {
-                if (!isPaused) {
+                if (!appScript.isPaused) {
                     onClick(element);
                 }
             };
@@ -41,14 +44,14 @@ function spawnElement({ className, images, onClick, onDestroy, spawnRate = 1,arr
                 arrayRef.push(element); // Add element to the specified array
             }
 
-            container.appendChild(element);
+            asteroidScript.container.appendChild(element);
             moveDown(element, 0, onDestroy);
         }, i * 200);
 
         spawnTimeouts.push(timeoutID);
     }
 }
-function clearSpawnTimeouts() {
+export function clearSpawnTimeouts() {
     spawnTimeouts.forEach(clearTimeout); // Clear all scheduled timeouts
     spawnTimeouts = []; // Reset array
 }
@@ -57,12 +60,12 @@ function moveDown(element, posY, onDestroy) {
     element.dataset.deleted = "false";
 
     function animate() {
-        if (!isTabActive || isPaused) { // Pause logic
+        if (!appScript.isWindowActive()) { // Pause logic
             requestAnimationFrame(animate);
             return;
         }
 
-        posY += speed;
+        posY += asteroidScript.returnSpeed();
         element.style.top = posY + "px";
 
         if (posY < window.innerHeight) {

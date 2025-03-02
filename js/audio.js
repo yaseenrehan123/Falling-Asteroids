@@ -13,7 +13,7 @@ function preloadAudio(audioFiles) {
     });
 }
 
-function playSound(audioFile) {
+export function playSound(audioFile) {
     if (audioCache[audioFile]) {
         const audio = audioCache[audioFile].cloneNode(); // Clone to allow multiple plays
         audio.play();

@@ -1,4 +1,4 @@
-function createParticles(x,y,color){
+export function createParticles(x,y,color){
     const div = document.createElement('div');
     div.style.left = x + 'px';
     div.style.top = y + 'px';
@@ -33,7 +33,7 @@ function createParticles(x,y,color){
 }
 
 
-function screenShake(duration = 200) {
+ export function screenShake(duration = 200) {
     let startTime = performance.now();
     let maxShakeOffset = 10; // Maximum shake intensity
 

@@ -1,6 +1,12 @@
+import * as appScript from './app.js';
+import * as elementScript from '../util/element.js';
+import * as audioScript from './audio.js';
+import * as hpScript from './hp.js';
+import * as particlesScript from './particles.js';
+import * as uiScript from './ui.js';
 const minSpawnDelay = 2000; // Ensures consistent spawn rate
 const maxSpawnDelay = 3000;
-let randomSpawnDelay = returnRandomNum(minSpawnDelay,maxSpawnDelay);
+let randomSpawnDelay = appScript.returnRandomNum(minSpawnDelay,maxSpawnDelay);
 const maxSpawnRate = 8;
 const defSpawnRate = 1;
 let spawnRate = defSpawnRate;
@@ -10,38 +16,38 @@ const speedIncreaseRate = 1;
 let speed = 2;
 
 const boxes = [];
-const container = document.querySelector('.container');
-let spawnTimeouts = []; // Store timeouts
+export const container = document.querySelector('.container');
+
 setInterval(spawnBox, randomSpawnDelay);
 
 function spawnBox() {
-    spawnElement({
+    elementScript.spawnElement({
         className: "element",
         images: ["asteroid1", "asteroid2", "asteroid3"],
         onClick: (box) => {
             let x = box.offsetLeft;
             let y = box.offsetTop;
-            playSound("audio/Blast-sound1.mp3");
-            screenShake(100);
-            createParticles(x, y, "#d35400");
+            audioScript.playSound("audio/Blast-sound1.mp3");
+            particlesScript.screenShake(100);
+            particlesScript.createParticles(x, y, "#d35400");
             deleteBox(box);
-            gameScore.currentScore++;
+            appScript.gameScore.currentScore++;
 
             // Update score display
-            scoreText.textContent = `Score: ${gameScore.currentScore}`;
+            uiScript.setScore(appScript.gameScore.currentScore);
 
             let highestScore = localStorage.getItem("score") || 0;
-            if (gameScore.currentScore > highestScore) {
-                gameScore.highestScore = gameScore.currentScore;
-                highestScoreText.textContent = `Highest Score: ${gameScore.highestScore}`;
-                localStorage.setItem("score", JSON.stringify(gameScore.highestScore));
+            if (appScript.gameScore.currentScore > highestScore) {
+                appScript.gameScore.highestScore = appScript.gameScore.currentScore;
+               uiScript.setHighestScore(appScript.gameScore.highestScore);
+                localStorage.setItem("score", JSON.stringify(appScript.gameScore.highestScore));
             }
         },
         onDestroy: (box) => {
             deleteBox(box);
-            subtractHp();
-            playSound('audio/587196__derplayer__explosion_06.ogg');
-            console.log(hp);
+            hpScript.subtractHp();
+            audioScript.playSound('audio/587196__derplayer__explosion_06.ogg');
+            
         },
         spawnRate: spawnRate,
         arrayRef: boxes,
@@ -52,7 +58,7 @@ function spawnBox() {
 
 function deleteBox(box){
     box.dataset.deleted = "true"; // Mark as deleted
-    boxIndex = boxes.indexOf(box);
+    const boxIndex = boxes.indexOf(box);
     if(boxIndex > -1){
         boxes.splice(boxIndex,1);
     }
@@ -63,7 +69,7 @@ function deleteBox(box){
     box.remove();
 }
 
-function ClearContainer(){
+export function ClearContainer(){
     if(container.childNodes.length > 0){
         boxes.forEach(box => {
             box.dataset.deleted = "true"; // Mark all boxes as deleted
@@ -71,4 +77,29 @@ function ClearContainer(){
         container.innerHTML = '';
         boxes.length = 0;
     }
+}
+export function increaseSpawnRate(){
+    if(!appScript.isWindowActive()){// if paused than return, if tab not active return.
+        return;
+    }
+    if(spawnRate < maxSpawnRate){
+        spawnRate ++;
+    }
+}
+export function increaseSpeed(){
+    if(!appScript.isWindowActive()){// if paused than return, if tab not active return.
+        return;
+    }
+    if(speed < maxSpeed){
+        speed += speedIncreaseRate;
+    }
+}
+export function resetSpeed(){
+    speed = defSpeed;
+}
+export function resetSpawnRate(){
+    spawnRate = defSpawnRate;
+}
+export function returnSpeed(){
+    return speed;
 }
