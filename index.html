@@ -1,104 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Falling Blocks</title>
-    <!--CSS-->
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Falling-Asteroids</title>
     <link rel="stylesheet" href="style.css">
-    <!--Javascript-->
-    <script src="js/app.js" defer type="module"></script>
-    <script src="js/asteroid.js" defer type="module"></script>
-    <script src="js/potion.js" type="module"></script>
-    <script src="js/ui.js" defer type="module"></script>
-    <script src="js/difficulty.js" defer type="module"></script>
-    <script src="js/hp.js" defer type="module"></script>
-    <!--Boxicons-->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
-</head>
-<body>
-   
-    <div class="container">
-        
-    </div>
-    <div class="ui-container">
-
-        <button class="settings-btn">Settings</button>
-
-        <div class="pause-window">
-            <div class="wrapper">
-
-                <div class="heading">
-                    <h1>Paused!</h1>
-                </div>
-
-                <button class="pause-screen-btn" id="go-to-main-menu-btn">
-                    Main Menu
-                </button>
-
-                <button class="pause-screen-btn" id="restart-btn">
-                    Restart
-                </button>
-
-                <button class="pause-screen-btn" id="reset-score-btn">
-                    Reset Score
-                </button>
-                
-                <div class="display-score-section">
-
-                    <div class="current-score">
-                        <h1>Score:</h1>
-                    </div>
-
-                    <div class="highest-score">
-                        <h1>Highest Score:</h1>
-                    </div>
-
-                </div>
-
-                <div class="unpause-btn">
-                    <i class='bx bx-x'></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="main-menu hide-main-menu">
-            <div class="name-heading hide-on-play">
-                <h1>Falling Asteroids </h1>
-            </div>
-            <div class="menu-btn-container">
-                <button class="menu-btn hide-on-play" id="start-btn">
-                    Start
-                </button>
-                <a href="https://yaseenrehan123.github.io/Falling-Asteroids-Website/" target="_blank">
-                    <button class="menu-btn hide-on-play">
-                        Website/Credits
-                    </button>
-                </a>
-                
-                <button class="menu-btn hide-on-play" id="quit-btn">
-                    Quit
-                </button>
-            </div>
-           
-
-        </div>
-
-        <div class="hp-container">
-            <img src="images/hearts/Heart1.gif">  
-        </div>
-
-        <div class="game-over-menu">
-            <div class="wrapper">
-                <div class="heading">
-                    <h1>Game Over!</h1>
-                </div>
-            </div>
-           
-        </div>
-        
-    </div>
-    
-</body>
+    <script src="src/app.ts"  defer type="module"></script>
+  </head>
+  <body>
+    <canvas class="game-canvas"></canvas>
+  </body>
 </html>

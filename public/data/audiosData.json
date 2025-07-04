@@ -1,0 +1,6 @@
+{
+    "healthPotion":"audio/health_potion.mp3",
+    "buttonClick":"audio/button_click.mp3",
+    "background":"audio/background2.mp3",
+    "explosion":"audio/explosion.mp3"
+}
